@@ -32,7 +32,7 @@ See [CLOUDFLARE_DEPLOYMENT.md](CLOUDFLARE_DEPLOYMENT.md) for domain setup and re
 | Ramo Buchón, 75 roses | $250 | Wrapped roses, no greenery or vase |
 | Ramo Buchón, 100 roses | $350 | Wrapped roses, no greenery or vase |
 
-Customers select 1–3 flower colors, 1–2 ribbon colors, and 1–2 wrapping paper colors. Actual flowers are designer's choice. Date picker requires a minimum of **21 calendar days** of notice, and preferred pickup time is collected for manual approval.
+Customers select 1–3 flower colors, exactly 1 ribbon color, and 1–2 wrapping paper colors. Actual flowers are designer's choice. Date picker requires a minimum of **21 calendar days** of notice, and preferred pickup time is collected for manual approval.
 
 ## Pickup address & privacy
 
