@@ -1,0 +1,1 @@
+This site is intended to be published using **GitHub + Cloudflare Pages** (like KinNotice and the portfolio), not GitHub Pages or Netlify. See [CLOUDFLARE_DEPLOYMENT.md](CLOUDFLARE_DEPLOYMENT.md) for current instructions. Only the city is shown on the live site. Keep exact pickup details private and off public websites.
