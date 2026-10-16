@@ -28,11 +28,11 @@ See [CLOUDFLARE_DEPLOYMENT.md](CLOUDFLARE_DEPLOYMENT.md) for domain setup and re
 | --- | ---: | --- |
 | Medium floral arrangement | $125 | Round glass vase, greenery |
 | Large floral arrangement | $175 | Round glass vase, greenery |
-| Ramo Buchón, 50 roses | $175 | Wrapped roses, no greenery or vase |
-| Ramo Buchón, 75 roses | $250 | Wrapped roses, no greenery or vase |
-| Ramo Buchón, 100 roses | $350 | Wrapped roses, no greenery or vase |
+| Ramo Buchón, 50 roses | $175 | Wrapped roses, designer-chosen ribbon, no greenery or vase |
+| Ramo Buchón, 75 roses | $250 | Wrapped roses, designer-chosen ribbon, no greenery or vase |
+| Ramo Buchón, 100 roses | $350 | Wrapped roses, designer-chosen ribbon, no greenery or vase |
 
-Customers choose **1–3 flower color families** from seven directly selectable cards, exactly **1 ribbon color**. The seven family choices are Blue to dark blue; Orange to peach; Pink to violet; Purple to violet; Red to burgundy; White to cream; and Yellow to gold. **There are no individual shade selections.** The selected families are recorded in the order summary and prepared email. Actual flowers and shades are designer's choice based on availability. The date picker requires **21 calendar days** of notice, and preferred pickup time is collected for manual approval.
+Customers choose **1–3 flower color families** from seven directly selectable cards. **There is no ribbon customization:** medium and large vase arrangements do not include a ribbon, while Ramo Buchón bouquets receive a ribbon selected by the studio. The seven family choices are Blue to dark blue; Orange to peach; Pink to violet; Purple to violet; Red to burgundy; White to cream; and Yellow to gold. **There are no individual shade selections.** The selected families are recorded in the order summary and prepared email. Actual flowers and shades are designer's choice based on availability. The date picker requires **21 calendar days** of notice, and preferred pickup time is collected for manual approval.
 
 ## Pickup address & privacy
 
