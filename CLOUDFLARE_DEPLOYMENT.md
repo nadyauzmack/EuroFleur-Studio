@@ -44,7 +44,7 @@ See Cloudflare's official documentation:
 
 ## Website behavior and custom orders
 
-The static site validates bouquet/rose counts, flower colors (1–3), ribbon colors (1–2), paper colors (1–2), and pickup requests **21+ days ahead**. It then opens a prefilled email to `justfloralmoments@gmail.com`.
+The static site validates bouquet/rose counts, flower colors (1–3), ribbon color (exactly 1), paper colors (1–2), and pickup requests **21+ days ahead**. It then opens a prefilled email to `justfloralmoments@gmail.com`.
 
 **Customers must press Send in their email client or Gmail.** The static site does not automatically transmit or save orders and does not collect payment. The studio personally confirms orders and gives customers their exact pickup address privately.
 
