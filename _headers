@@ -1,0 +1,21 @@
+# Prevent browsers from keeping outdated order instructions after a Pages deployment.
+/
+  Cache-Control: no-cache, max-age=0, must-revalidate
+
+/index.html
+  Cache-Control: no-cache, max-age=0, must-revalidate
+
+/journal/*
+  Cache-Control: no-cache, max-age=0, must-revalidate
+
+/faq/*
+  Cache-Control: no-cache, max-age=0, must-revalidate
+
+/collection/*
+  Cache-Control: no-cache, max-age=0, must-revalidate
+
+/signature-arrangements/*
+  Cache-Control: no-cache, max-age=0, must-revalidate
+
+/ramo-buchon/*
+  Cache-Control: no-cache, max-age=0, must-revalidate
