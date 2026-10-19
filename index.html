@@ -172,7 +172,7 @@
           </div>
           <div class="form-section"><div class="section-label"><span class="digit">02.</span> Choose your flower colors</div><p class="minor">Choose 1–3 color families. Each family counts as one selection; we decide the specific shades and flower varieties.</p><div class="flower-families" id="flower-palette" aria-label="Flower color families, select one to three"></div><div class="selection-counter" id="flower-counter" aria-live="polite">Choose 1 to 3 color families</div></div>
                     <div class="form-section"><div class="section-label"><span class="digit">03.</span> Choose your pickup</div><p class="minor">Standard online orders require at least three weeks' notice. Need flowers sooner? Use the $200 last-minute option above and call or text us.</p>
-            <div class="two-cols"><div class="field"><label for="pickup-date">Preferred pickup date *</label><input type="date" id="pickup-date" name="pickup_date" required /><span id="date-helper" class="field-help">The earliest pickup date is being calculated.</span></div><div class="field"><label for="pickup-time">Preferred pickup time *</label><select id="pickup-time" name="pickup_time" required><option value="">Select a 15-minute pickup slot</option></select><span class="field-help">Every day, 8:00 AM–9:00 PM · 15-minute slots. Up to 4 pickups per slot, subject to confirmation.</span></div></div>
+            <div class="two-cols"><div class="field"><label for="pickup-date">Preferred pickup date *</label><input type="date" id="pickup-date" name="pickup_date" required /><span id="date-helper" class="field-help">The earliest pickup date is being calculated.</span></div><div class="field"><label for="pickup-time">Preferred pickup time *</label><select id="pickup-time" name="pickup_time" required><option value="">Select a 15-minute pickup slot</option></select><span class="field-help">Every day, 8:00 AM–9:00 PM · 15-minute slots. No pickups November 24–December 3, 2026. Up to 4 pickups per slot, subject to confirmation.</span></div></div>
             <div class="pickup-callout"><svg width="19" height="20" viewBox="0 0 24 24" fill="none" stroke="#647a63" stroke-width="1.5"><path d="M3 9 12 3l9 6v11H3V9Z"/><path d="M9 20v-8h6v8"/></svg><div><strong>Local pickup · Canal Winchester</strong><p>The exact pickup address will be shared after your order is personally confirmed.<br/>Pickup only for now. Requested times are subject to confirmation; up to four pickups may be accepted per 15-minute slot.</p></div></div>
           </div>
           <div class="form-section"><div class="section-label"><span class="digit">04.</span> Payment preference</div><p class="minor">Choose how you would like to pay. No payment is taken through this website.</p><div class="field"><label for="payment-method">Payment method *</label><select id="payment-method" name="payment_method" required><option value="">Choose payment method</option><option value="Venmo">Venmo</option><option value="Cash App">Cash App</option><option value="Cash at pickup">Cash at pickup</option></select><span class="field-help">We will share payment instructions after personally confirming your order. Do not send payment until then.</span></div></div><div class="form-section"><div class="section-label"><span class="digit">05.</span> Your details</div><div class="fields"><div class="two-cols"><div class="field"><label for="customer-name">Your full name *</label><input id="customer-name" name="customer_name" type="text" placeholder="First and last name" required autocomplete="name" maxlength="100" /></div><div class="field"><label for="customer-phone">Phone number *</label><input id="customer-phone" name="phone" type="tel" placeholder="(555) 555-5555" autocomplete="tel" required maxlength="30" /></div></div><div class="field"><label for="customer-email">Email address *</label><input id="customer-email" name="email" type="email" placeholder="you@example.com" autocomplete="email" required maxlength="150" /></div><div class="field"><label for="customer-note">A little note (optional)</label><textarea id="customer-note" name="notes" maxlength="600" placeholder="Who is it for? What's the occasion? Anything else you'd love us to know? (Specific flowers aren't guaranteed.)"></textarea></div></div>
@@ -218,12 +218,13 @@
     const fmt=(n)=>new Intl.NumberFormat('en-US',{style:'currency',currency:'USD',maximumFractionDigits:0}).format(n);
     const timeLocale=(date,time)=>{if(!date)return '';const d=new Date(date+'T12:00:00');return d.toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'})+(time?' at '+new Date('2000-01-01T'+time).toLocaleTimeString('en-US',{hour:'numeric',minute:'2-digit'}):'')};
     function localDateString(d){return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`}
+    function isPickupBlackout(date){return date >= '2026-11-24' && date <= '2026-12-03'}
     function getMinDate(){const now=new Date();const min=new Date(now.getFullYear(),now.getMonth(),now.getDate());min.setDate(min.getDate()+21);return localDateString(min)}
     const minDate=getMinDate();
     $('pickup-date').min=minDate;
     const pickupSelect=$('pickup-time');
     for(let minutes=8*60;minutes<=21*60;minutes+=15){const h=Math.floor(minutes/60),m=minutes%60;const value=String(h).padStart(2,'0')+':'+String(m).padStart(2,'0');const option=document.createElement('option');option.value=value;option.textContent=new Date('2000-01-01T'+value+':00').toLocaleTimeString('en-US',{hour:'numeric',minute:'2-digit'});pickupSelect.appendChild(option)}
-    $('date-helper').textContent='Earliest available request: '+timeLocale(minDate)+'.';
+    $('date-helper').textContent='Earliest available request: '+timeLocale(minDate)+'. No pickups November 24–December 3, 2026.';
     function initFlowerFamilies(){
       const container=$('flower-palette');
       FLOWER_FAMILIES.forEach(family=>{
@@ -257,7 +258,7 @@
     document.querySelectorAll('[data-product]').forEach(b=>b.addEventListener('click',()=>chooseProduct(b.dataset.product)));
     document.querySelectorAll('[data-pick]').forEach(link=>link.addEventListener('click',()=>chooseProduct(link.dataset.pick)));
     document.querySelectorAll('[data-roses]').forEach(b=>b.addEventListener('click',()=>{state.roses=Number(b.dataset.roses);document.querySelectorAll('[data-roses]').forEach(c=>c.setAttribute('aria-pressed',String(c===b)));render()}));
-    $('pickup-date').addEventListener('change',()=>{if($('pickup-date').value&&$('pickup-date').value<getMinDate()){$('pickup-date').value=''}render()});
+    $('pickup-date').addEventListener('change',()=>{if($('pickup-date').value&&($('pickup-date').value<getMinDate()||isPickupBlackout($('pickup-date').value))){$('pickup-date').value='';$('date-helper').textContent='November 24–December 3, 2026 is unavailable for pickup. Please choose another date.'}render()});
     $('pickup-time').addEventListener('change',render);
     function render(){
       $('summary-product').textContent=PRODUCT[state.product].name;
@@ -303,6 +304,7 @@
       if(state.flowers.length<1||state.flowers.length>3)return error('Choose between 1 and 3 flower color families.',$('flower-palette').querySelector('button'));
       const d=$('pickup-date').value;
       if(!d||d<getMinDate())return error('Your pickup date must be at least three weeks (21 calendar days) from today.',$('pickup-date'));
+      if(isPickupBlackout(d))return error('Pickup is unavailable November 24–December 3, 2026. Please select another date.',$('pickup-date'));
       if(!$('pickup-time').value)return error('Please choose a preferred pickup time.',$('pickup-time'));
       if(!$('payment-method').value)return error('Please select Venmo, Cash App, or cash at pickup.',$('payment-method'));
       for(const id of ['customer-name','customer-phone','customer-email']){const control=$(id);if(!control.checkValidity()||!control.value.trim()){return error('Please enter valid contact details in all required fields.',control)}}
