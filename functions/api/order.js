@@ -22,7 +22,7 @@ export async function onRequestPost({request,env}){
   if(!Number.isFinite(basePrice))return json({error:'Please choose a valid rose count.'},400);
   const finalPrice=basePrice+(requestType==='rush'?25:0);
   const lines=[
-    (requestType==='rush'?'RUSH REQUEST — NOT GUARANTEED':'STANDARD REQUEST')+' — EUROFLEUR STUDIO','',
+    (requestType==='rush'?'RUSH REQUEST — FULFILLMENT NOT GUARANTEED':'STANDARD REQUEST')+' — EUROFLEUR STUDIO','',
     'Customer: '+name,'Email: '+email,'Phone: '+phone,
     'Arrangement: '+clean(x.arrangement,150),
     'Rose count: '+(x.product==='ramo'?clean(x.roses,4):'N/A'),
@@ -31,19 +31,11 @@ export async function onRequestPost({request,env}){
     'Request type: '+requestType,
     'Rush surcharge: '+(requestType==='rush'?'$25':'None'),
     'Payment preference: '+clean(x.payment,60),
-    'Estimated price: 
+    'Estimated price: $'+finalPrice,
     'Notes: '+clean(x.notes,1500),'',
     'Approval or denial is emailed within 48 hours. REQUEST ONLY — pickup and payment require studio confirmation.'
   ];
   let r;try{r=await fetch('https://api.resend.com/emails',{method:'POST',headers:{'Authorization':'Bearer '+env.RESEND_API_KEY,'Content-Type':'application/json'},body:JSON.stringify({from:env.ORDER_FROM_EMAIL,to:['justfloralmoments@gmail.com'],reply_to:email,subject:(requestType==='rush'?'RUSH — ':'')+'New EuroFleur bouquet request — '+name,text:lines.join('\n')})})}catch{return json({error:'Email service temporarily unavailable. Please try again.'},502)}
-  if(!r.ok){console.error('Resend delivery error',r.status,await r.text());return json({error:'Email could not be delivered. Please try again or text us.'},502)}
-  return json({ok:true});
-}
-+finalPrice,
-    'Notes: '+clean(x.notes,1500),'',
-    'REQUEST ONLY — pickup and payment require studio confirmation.'
-  ];
-  let r;try{r=await fetch('https://api.resend.com/emails',{method:'POST',headers:{'Authorization':'Bearer '+env.RESEND_API_KEY,'Content-Type':'application/json'},body:JSON.stringify({from:env.ORDER_FROM_EMAIL,to:['justfloralmoments@gmail.com'],reply_to:email,subject:'New EuroFleur bouquet request — '+name,text:lines.join('\n')})})}catch{return json({error:'Email service temporarily unavailable. Please try again.'},502)}
   if(!r.ok){console.error('Resend delivery error',r.status,await r.text());return json({error:'Email could not be delivered. Please try again or text us.'},502)}
   return json({ok:true});
 }
