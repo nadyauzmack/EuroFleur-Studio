@@ -142,6 +142,9 @@
 .work-dots button.active,.work-dots button:hover{color:#895b70;opacity:1;background:transparent;transform:none}
 @media(max-width:1000px){.work-gallery{width:calc(100% - 54px)}.work-prev{left:-33px}.work-next{right:-33px}.work-arrow,.work-arrow:hover{width:29px}.work-arrow span,.work-prev span,.work-next span{font-size:40px}}
 @media(max-width:600px){.work-gallery{width:calc(100% - 38px)}.work-prev{left:-25px}.work-next{right:-25px}.work-arrow,.work-arrow:hover{width:23px;height:44px}.work-arrow span,.work-prev span,.work-next span{font-size:35px}.work-dots{gap:14px}}
+
+    .pickup-date-error{margin-top:10px;padding:14px 17px;border-radius:12px;background:#743c60;color:#fffdf9;font:600 12px/1.65 var(--sans);box-shadow:0 7px 18px rgba(90,37,73,.16)}
+    .pickup-date-error[hidden]{display:none!important}
 </style>
 </head>
 <body>
@@ -209,7 +212,7 @@
           </div>
           <div class="form-section"><div class="section-label"><span class="digit">02.</span> Choose your flower colors</div><p class="minor">Choose 1–3 color families. Each family counts as one selection; we decide the specific shades and flower varieties.</p><div class="flower-families" id="flower-palette" aria-label="Flower color families, select one to three"></div><div class="selection-counter" id="flower-counter" aria-live="polite">Choose 1 to 3 color families</div></div>
                     <div class="form-section"><div class="section-label"><span class="digit">03.</span> Choose your pickup</div><p class="minor">Standard online orders require at least three weeks' notice. Need flowers sooner? Use the $200 last-minute option above and call or text us.</p>
-            <div class="two-cols"><div class="field"><label for="pickup-date">Preferred pickup date *</label><input type="date" id="pickup-date" name="pickup_date" required /><span id="date-helper" class="field-help">The earliest pickup date is being calculated.</span></div><div class="field"><label for="pickup-time">Preferred pickup time *</label><select id="pickup-time" name="pickup_time" required><option value="">Select a 15-minute pickup slot</option></select><span class="field-help">Every day, 8:00 AM–9:00 PM · 15-minute slots. No pickups November 24–December 3, 2026. Up to 4 pickups per slot, subject to confirmation.</span></div></div>
+            <div class="two-cols"><div class="field"><label for="pickup-date">Preferred pickup date *</label><input type="date" id="pickup-date" name="pickup_date" required /><span id="date-helper" class="field-help">The earliest pickup date is being calculated.</span><div id="pickup-date-error" class="pickup-date-error" role="alert" aria-live="polite" hidden></div></div><div class="field"><label for="pickup-time">Preferred pickup time *</label><select id="pickup-time" name="pickup_time" required><option value="">Select a 15-minute pickup slot</option></select><span class="field-help">Every day, 8:00 AM–9:00 PM · 15-minute slots. No pickups November 24–December 3, 2026. Up to 4 pickups per slot, subject to confirmation.</span></div></div>
             <div class="pickup-callout"><svg width="19" height="20" viewBox="0 0 24 24" fill="none" stroke="#647a63" stroke-width="1.5"><path d="M3 9 12 3l9 6v11H3V9Z"/><path d="M9 20v-8h6v8"/></svg><div><strong>Local pickup · Canal Winchester</strong><p>The exact pickup address will be shared after your order is personally confirmed.<br/>Pickup only for now. Requested times are subject to confirmation; up to four pickups may be accepted per 15-minute slot.</p></div></div>
           </div>
           <div class="form-section"><div class="section-label"><span class="digit">04.</span> Payment preference</div><p class="minor">Choose how you would like to pay. No payment is taken through this website.</p><div class="field"><label for="payment-method">Payment method *</label><select id="payment-method" name="payment_method" required><option value="">Choose payment method</option><option value="Venmo">Venmo</option><option value="Cash App">Cash App</option><option value="Cash at pickup">Cash at pickup</option></select><span class="field-help">We will share payment instructions after personally confirming your order. Do not send payment until then.</span></div></div><div class="form-section"><div class="section-label"><span class="digit">05.</span> Your details</div><div class="fields"><div class="two-cols"><div class="field"><label for="customer-name">Your full name *</label><input id="customer-name" name="customer_name" type="text" placeholder="First and last name" required autocomplete="name" maxlength="100" /></div><div class="field"><label for="customer-phone">Phone number *</label><input id="customer-phone" name="phone" type="tel" placeholder="(555) 555-5555" autocomplete="tel" required maxlength="30" /></div></div><div class="field"><label for="customer-email">Email address *</label><input id="customer-email" name="email" type="email" placeholder="you@example.com" autocomplete="email" required maxlength="150" /></div><div class="field"><label for="customer-note">A little note (optional)</label><textarea id="customer-note" name="notes" maxlength="600" placeholder="Who is it for? What's the occasion? Anything else you'd love us to know? (Specific flowers aren't guaranteed.)"></textarea></div></div>
@@ -295,7 +298,17 @@
     document.querySelectorAll('[data-product]').forEach(b=>b.addEventListener('click',()=>chooseProduct(b.dataset.product)));
     document.querySelectorAll('[data-pick]').forEach(link=>link.addEventListener('click',()=>chooseProduct(link.dataset.pick)));
     document.querySelectorAll('[data-roses]').forEach(b=>b.addEventListener('click',()=>{state.roses=Number(b.dataset.roses);document.querySelectorAll('[data-roses]').forEach(c=>c.setAttribute('aria-pressed',String(c===b)));render()}));
-    $('pickup-date').addEventListener('change',()=>{if($('pickup-date').value&&($('pickup-date').value<getMinDate()||isPickupBlackout($('pickup-date').value))){$('pickup-date').value='';$('date-helper').textContent='November 24–December 3, 2026 is unavailable for pickup. Please choose another date.'}render()});
+    $('pickup-date').addEventListener('change',()=>{
+      const selected=$('pickup-date').value;
+      const invalid=selected&&(selected<getMinDate()||isPickupBlackout(selected));
+      const error=$('pickup-date-error');
+      if(invalid){
+        error.textContent='The date you selected is not available, please pick another date or text for a last minute arrangement.';
+        error.hidden=false;
+        $('pickup-date').value='';
+      }else{error.textContent='';error.hidden=true;}
+      render();
+    });
     $('pickup-time').addEventListener('change',render);
     function render(){
       $('summary-product').textContent=PRODUCT[state.product].name;
