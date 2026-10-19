@@ -123,6 +123,12 @@
 .work-dots button::before{content:'✿';font-size:23px;line-height:1}
 .work-dots button.active{background:transparent;color:#743c60;transform:scale(1.2)}
 .work-dots button:hover{color:#743c60;transform:scale(1.15)}
+
+    /* Refined vintage editorial seal: contained text, no bright halo */
+    .story-art .seal{width:clamp(148px,22vw,184px);height:clamp(148px,22vw,184px);padding:27px 24px;border-radius:50%;background:#faf6ee;color:#57514b;border:1px solid #c9b9a9;outline:1px solid rgba(201,185,169,.55);outline-offset:-9px;box-shadow:0 8px 24px rgba(65,53,44,.12);font:500 clamp(20px,2.7vw,27px)/1.08 var(--serif);letter-spacing:-.025em;text-align:center;overflow-wrap:normal;word-break:normal;transform:rotate(-5deg);bottom:28px;right:28px;isolation:isolate}
+    .story-art .seal::before{content:none}
+    @media(max-width:760px){.story-art .seal{width:154px;height:154px;padding:25px 21px;font-size:23px;line-height:1.08;bottom:22px;right:22px;transform:rotate(-4deg)}}
+    @media(max-width:360px){.story-art .seal{width:140px;height:140px;padding:22px 18px;font-size:21px;right:15px;bottom:15px}}
 </style>
 </head>
 <body>
