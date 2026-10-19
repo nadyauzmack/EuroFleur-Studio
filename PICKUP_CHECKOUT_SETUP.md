@@ -17,10 +17,10 @@ This is a **staging branch**, not live checkout. Current email-order flow on mai
 WEEKLY_PICKUP_SLOTS = {"2":["17:00","17:30"],"6":["11:00","11:30"]}
 BLOCKED_PICKUP_DATES = ["2026-11-26","2026-12-25"]
 
-These are **examples**, not your actual availability. Leave slots empty until real hours are chosen.
+Confirmed schedule: Monday–Sunday, hourly pickup slots 8:00 AM through 7:00 PM Eastern (8:00 PM closing), maximum 3 orders per slot, at least 21 days ahead. These defaults are in the availability function; environment variables override them. Blocked dates default to none. Capacity is informational until durable reservations are implemented.
 
 ## Remaining before enabling payments
-1. Confirm actual weekly pickup hours, slot duration, maximum orders per slot, blocked dates.
+1. Confirm any specific blocked dates; weekly schedule is set to seven days, 8 AM–8 PM, hourly, three orders per slot.
 2. Create Stripe account, configure test-mode STRIPE_SECRET_KEY as a Cloudflare encrypted secret and webhook signing secret; never commit either.
 3. Implement server-side price mapping (medium $125, large $175, Ramo 50/75/100 $175/$250/$350), Stripe Checkout Sessions and tax handling.
 4. Add durable D1 order and slot reservations with concurrency protection and expiration; recheck availability server-side before checkout.
